@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="'over'"
+      [opened]="false">
+    <mat-toolbar class="Nav_cl">Menu</mat-toolbar>
+   
+   <ng-material-multilevel-menu
+   [items]="itemsNav"
+   [configuration]='config' 
+   ></ng-material-multilevel-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="Nav_cl">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>School Library <sup>Management</sup></span>
+      <span class="spacer"></span>
+      <a mat-button [routerLink]="['/login']" *ngIf="!isLoggedIn">Login</a>
+      <button (click)="logout()" mat-button  *ngIf="isLoggedIn"  >Logout</button>
+    </mat-toolbar>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

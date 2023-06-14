@@ -1,0 +1,61 @@
+<mat-card class="full-card">
+    <mat-card-header>
+        <mat-card-title>Books</mat-card-title>
+        <mat-card-subtitle>List of book</mat-card-subtitle>
+        <span class="spacer"></span>
+        <div>
+            <a mat-mini-fab [routerLink]="['/book-create']">
+                <mat-icon>add</mat-icon>
+            </a>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div style="display: flex; width: 100%;">
+            <span class="spacer"></span>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <mat-select (selectionChange)="onSlectionChange($event)" >
+                    <mat-option  [value]="">
+                    All
+                    </mat-option>
+                  <mat-option  [value]="'Free'">
+                    Free
+                  </mat-option>
+                  <mat-option  [value]="'Issued'">
+                    Issued
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+            </ng-container>  
+            <ng-container matColumnDef="author">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Author</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.author}}</mat-cell>
+              </ng-container>  
+            <ng-container matColumnDef="price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.price|number:'1.2-2'}}</mat-cell>
+            </ng-container> 
+            <ng-container matColumnDef="isFree">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Free</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.isFree ? "Yes":"No"}}</mat-cell>
+            </ng-container>  
+                  
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>...</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <a mat-icon-button [routerLink]="['/book-edit', element.bookId]"><mat-icon>edit</mat-icon></a>
+                
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+            <mat-row *matRowDef="let row;columns:columns"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+</mat-card>
+

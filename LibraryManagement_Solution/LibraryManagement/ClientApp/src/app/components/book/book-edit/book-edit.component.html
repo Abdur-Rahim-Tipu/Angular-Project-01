@@ -1,0 +1,53 @@
+<mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Edit book</mat-card-title>
+      <mat-card-subtitle>Update book information</mat-card-subtitle>
+      <span class="spacer"></span>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="bookForm" (ngSubmit)="save()">
+        <mat-form-field class="f-w mb-1">
+          <mat-label>Title</mat-label>
+          <input type="text" matInput formControlName="title" />
+  
+          <mat-error *ngIf="f['title'].touched && f['title'].hasError('required')">
+            Title is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="f-w mb-1">
+            <mat-label>Author</mat-label>
+            <input type="text" matInput formControlName="author" />
+    
+            <mat-error *ngIf="f['author'].touched && f['author'].hasError('required')">
+              Author is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        <mat-form-field class="f-w mb-1">
+          <mat-label>Price</mat-label>
+          <input type="text" matInput formControlName="price" />
+  
+          <mat-error *ngIf="f['price'].touched && f['price'].hasError('required')">
+            Price is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="f['price'].hasError('pattern')">
+            Price is <strong>invalid</strong>
+          </mat-error>
+        </mat-form-field>
+        
+        <div class="f-w mb-1">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="bookForm.invalid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-button [routerLink]="['/books']">Back to book list</a>
+    </mat-card-actions>
+  </mat-card>
+  

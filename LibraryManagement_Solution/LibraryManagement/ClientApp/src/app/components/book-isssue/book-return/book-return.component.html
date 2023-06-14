@@ -1,0 +1,105 @@
+<mat-card class="full-card">
+  <mat-card-header>
+    <mat-card-title>Book borrows</mat-card-title>
+    <mat-card-subtitle
+      >Books borrowed by
+      <span *ngIf="borrows.length">{{
+        borrows[0].studentName
+      }}</span></mat-card-subtitle
+    >
+    <span class="spacer"></span>
+    <div>
+      <a mat-mini-fab [routerLink]="['/student-create']">
+        <mat-icon>add</mat-icon>
+      </a>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div style="display: flex; width: 100%">
+      <span class="spacer"></span>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <mat-select (selectionChange)="onSlectionChange($event)">
+          <mat-option [value]=""> All </mat-option>
+          <mat-option [value]="'Returned'"> Returned </mat-option>
+          <mat-option [value]="'YetToReturn'"> Yet to return </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="studentName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Student name</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">{{ element.studentName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Title</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="issueDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Issue date</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">{{
+          element.issueDate | date : "yyyy-MM-dd"
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="returnDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Return date</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">{{
+          element.returnDate | date : "yyyy-MM-dd"
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actualReturnDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Actual return date</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          
+                           
+            <mat-form-field *ngIf="element.inEdit">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="datepicker" (dateInput)="onDateChange($event, element)" [value]="getActualDate(element)">
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+            
+              
+          
+                    <span *ngIf="!element.inEdit">{{
+            element.actualReturnDate | date : "yyyy-MM-dd"
+          }}</span>
+          </mat-cell
+        >
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" (click)="editClick(element)">
+            <mat-icon> edit </mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns"></mat-row>
+    </mat-table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSize]="5"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button [routerLink]="['/students']">Back to student list</a>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,21 @@
+<div class="frm-container">
+    <form [formGroup]="loginForm" class="frm" (ngSubmit)="onSubmit()">
+        <header>
+            <div>Login</div>
+        </header>
+        <mat-form-field class="full-width" appearance="fill" >
+            <mat-label>Username</mat-label>
+            <input type="text" matInput formControlName="username" >
+            <mat-error>Username is <strong>required</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" >
+            <mat-error>Password is <strong>required</strong></mat-error>
+          </mat-form-field>
+          <div class="full-width" appearance="fill">
+            <button [disabled]="loginForm.invalid" type="submit" mat-raised-button color="primary">Sign in</button>
+          </div>
+    </form>
+</div>
+
